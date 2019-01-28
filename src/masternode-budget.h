@@ -367,9 +367,9 @@ public:
         return true;
     }
 
-    // Verify and vote on finalized budget
-    void CheckAndVote();
-    //total pivx paid out by this budget
+    //check to see if we should vote on this
+    void AutoCheck();
+    //total bitcoinone paid out by this budget
     CAmount GetTotalPayout();
     //vote on this finalized budget as a masternode
     void SubmitVote();
@@ -524,7 +524,7 @@ public:
 
     void CleanAndRemove(bool fSignatureCheck);
 
-    uint256 GetHash() const
+    uint256 GetHash()
     {
         CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
         ss << strProposalName;

@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/pivx-config.h"
+#include "config/bitcoinone-config.h"
 #endif
 
 #include "optionsdialog.h"
@@ -343,9 +343,4 @@ bool OptionsDialog::eventFilter(QObject* object, QEvent* event)
         }
     }
     return QDialog::eventFilter(object, event);
-}
-
-void OptionsDialog::setCurrentIndex(int index)
-{
-    ui->tabWidget->setCurrentIndex(index);
 }

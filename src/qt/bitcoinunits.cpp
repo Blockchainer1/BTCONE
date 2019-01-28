@@ -19,18 +19,18 @@ BitcoinUnits::BitcoinUnits(QObject* parent) : QAbstractListModel(parent),
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(PIV);
-    unitlist.append(mPIV);
-    unitlist.append(uPIV);
+    unitlist.append(BTCONE);
+    unitlist.append(mBTCONE);
+    unitlist.append(uBTCONE);
     return unitlist;
 }
 
 bool BitcoinUnits::valid(int unit)
 {
     switch (unit) {
-    case PIV:
-    case mPIV:
-    case uPIV:
+    case BTCONE:
+    case mBTCONE:
+    case uBTCONE:
         return true;
     default:
         return false;
@@ -40,12 +40,12 @@ bool BitcoinUnits::valid(int unit)
 QString BitcoinUnits::id(int unit)
 {
     switch (unit) {
-    case PIV:
-        return QString("pivx");
-    case mPIV:
-        return QString("mpivx");
-    case uPIV:
-        return QString::fromUtf8("upivx");
+    case BTCONE:
+        return QString("bitcoinone");
+    case mBTCONE:
+        return QString("mbitcoinone");
+    case uBTCONE:
+        return QString::fromUtf8("ubitcoinone");
     default:
         return QString("???");
     }
@@ -55,23 +55,23 @@ QString BitcoinUnits::name(int unit)
 {
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
-        case PIV:
-            return QString("PIV");
-        case mPIV:
-            return QString("mPIV");
-        case uPIV:
-            return QString::fromUtf8("μPIV");
+        case BTCONE:
+            return QString("BTCONE");
+        case mBTCONE:
+            return QString("mBTCONE");
+        case uBTCONE:
+            return QString::fromUtf8("μBTCONE");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
-        case PIV:
-            return QString("tPIV");
-        case mPIV:
-            return QString("mtPIV");
-        case uPIV:
-            return QString::fromUtf8("μtPIV");
+        case BTCONE:
+            return QString("tBTCONE");
+        case mBTCONE:
+            return QString("mtBTCONE");
+        case uBTCONE:
+            return QString::fromUtf8("μtBTCONE");
         default:
             return QString("???");
         }
@@ -82,23 +82,23 @@ QString BitcoinUnits::description(int unit)
 {
     if (Params().NetworkID() == CBaseChainParams::MAIN) {
         switch (unit) {
-        case PIV:
-            return QString("PIV");
-        case mPIV:
-            return QString("Milli-PIV (1 / 1" THIN_SP_UTF8 "000)");
-        case uPIV:
-            return QString("Micro-PIV (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+        case BTCONE:
+            return QString("BTCONE");
+        case mBTCONE:
+            return QString("Milli-BTCONE (1 / 1" THIN_SP_UTF8 "000)");
+        case uBTCONE:
+            return QString("Micro-BTCONE (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
     } else {
         switch (unit) {
-        case PIV:
-            return QString("TestPIVs");
-        case mPIV:
-            return QString("Milli-TestPIV (1 / 1" THIN_SP_UTF8 "000)");
-        case uPIV:
-            return QString("Micro-TestPIV (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+        case BTCONE:
+            return QString("TestBTCONEs");
+        case mBTCONE:
+            return QString("Milli-TestBTCONE (1 / 1" THIN_SP_UTF8 "000)");
+        case uBTCONE:
+            return QString("Micro-TestBTCONE (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
         default:
             return QString("???");
         }
@@ -108,11 +108,11 @@ QString BitcoinUnits::description(int unit)
 qint64 BitcoinUnits::factor(int unit)
 {
     switch (unit) {
-    case PIV:
+    case BTCONE:
         return 100000000;
-    case mPIV:
+    case mBTCONE:
         return 100000;
-    case uPIV:
+    case uBTCONE:
         return 100;
     default:
         return 100000000;
@@ -122,11 +122,11 @@ qint64 BitcoinUnits::factor(int unit)
 int BitcoinUnits::decimals(int unit)
 {
     switch (unit) {
-    case PIV:
+    case BTCONE:
         return 8;
-    case mPIV:
+    case mBTCONE:
         return 5;
-    case uPIV:
+    case uBTCONE:
         return 2;
     default:
         return 0;

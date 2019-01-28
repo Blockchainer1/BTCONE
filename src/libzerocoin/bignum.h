@@ -7,12 +7,11 @@
 #define BITCOIN_BIGNUM_H
 
 #if defined HAVE_CONFIG_H
-#include "config/pivx-config.h"
+#include "bitcoinone-config.h"
 #endif
 
 #include <stdexcept>
 #include <vector>
-#include <limits.h>
 #if defined(USE_NUM_GMP)
 #include <gmp.h>
 #endif
@@ -118,7 +117,7 @@ public:
     * @param range The upper bound on the number.
     * @return
     */
-    static CBigNum  randBignum(const CBigNum& range) {
+    static CBigNum randBignum(const CBigNum& range) {
         CBigNum ret;
         if(!BN_rand_range(ret.bn, range.bn)){
             throw bignum_error("CBigNum:rand element : BN_rand_range failed");
@@ -311,6 +310,25 @@ public:
         vch.erase(vch.begin(), vch.begin() + 4);
         reverse(vch.begin(), vch.end());
         return vch;
+    }
+
+    CBigNum SetCompact(unsigned int nCompact)
+    {
+        unsigned int nSize = nCompact >> 24;
+        bool fNegative     =(nCompact & 0x00800000) != 0;
+        unsigned int nWord = nCompact & 0x007fffff;
+        if (nSize <= 3)
+        {
+            nWord >>= 8*(3-nSize);
+            BN_set_word(bn, nWord);
+        }
+        else
+        {
+            BN_set_word(bn, nWord);
+            BN_lshift(bn, bn, 8*(nSize-3));
+        }
+        BN_set_negative(bn, fNegative);
+        return *this;
     }
 
     void SetDec(const std::string& str)

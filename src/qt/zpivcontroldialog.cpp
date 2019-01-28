@@ -2,8 +2,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zpivcontroldialog.h"
-#include "ui_zpivcontroldialog.h"
+#include "zbtconecontroldialog.h"
+#include "ui_zbtconecontroldialog.h"
 
 #include "accumulators.h"
 #include "main.h"
@@ -73,9 +73,9 @@ void ZPivControlDialog::updateList()
         itemDenom->setData(COLUMN_DENOMINATION, Qt::UserRole, QVariant((qlonglong) denom));
     }
 
-    // select all unused coins - including not mature and mismatching seed. Update status of coins too.
+    // select all unused coins - including not mature. Update status of coins too.
     std::set<CMintMeta> set;
-    model->listZerocoinMints(set, true, false, true, true);
+    model->listZerocoinMints(set, true, false, true);
     this->setMints = set;
 
     //populate rows with mint info
@@ -115,7 +115,7 @@ void ZPivControlDialog::updateList()
             isMature = mint.nHeight < mapMaturityHeight.at(denom);
 
         // disable selecting this mint if it is not spendable - also display a reason why
-        bool fSpendable = isMature && nConfirmations >= Params().Zerocoin_MintRequiredConfirmations() && mint.isSeedCorrect;
+        bool fSpendable = isMature && nConfirmations >= Params().Zerocoin_MintRequiredConfirmations();
         if(!fSpendable) {
             itemMint->setDisabled(true);
             itemMint->setCheckState(COLUMN_CHECKBOX, Qt::Unchecked);
@@ -127,8 +127,6 @@ void ZPivControlDialog::updateList()
             string strReason = "";
             if(nConfirmations < Params().Zerocoin_MintRequiredConfirmations())
                 strReason = strprintf("Needs %d more confirmations", Params().Zerocoin_MintRequiredConfirmations() - nConfirmations);
-            else if (!mint.isSeedCorrect)
-                strReason = "The zPIV seed used to mint this zPIV is not the same as currently hold in the wallet";
             else
                 strReason = strprintf("Needs %d more mints added to network", Params().Zerocoin_RequiredAccumulation());
 
